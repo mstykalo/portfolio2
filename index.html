@@ -271,7 +271,7 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
 /* ---------- Mobile ---------- */
 @media (max-width: 860px){
   .scrolly{ grid-template-columns: 1fr; gap: 2rem; }
-  .map-sticky{ position: relative; top: 0; height: 45vh; }
+  .map-sticky{ position: sticky; top: 0; height: 34vh; }
   .rail-sticky{ display: none; }
   .hero h1{ font-size: 28px; }
   .additional-grid{ grid-template-columns: 1fr; }
@@ -563,7 +563,8 @@ const projectEls = document.querySelectorAll('.project');
 // pinned through the very last project before it's released. This is
 // more reliable than depending on the grid to stretch it correctly.
 function syncMapColHeight(){
-  document.getElementById('map-col').style.minHeight = (col.offsetHeight + 120) + 'px';
+  const mapCol = document.getElementById('map-col');
+  mapCol.style.minHeight = (col.offsetHeight + 120) + 'px';
 }
 syncMapColHeight();
 window.addEventListener('resize', () => setTimeout(syncMapColHeight, 150));
