@@ -128,11 +128,10 @@ body{
 }
 #map{ width: 100%; height: 100%; filter: grayscale(1) contrast(1.05); }
 .map-caption{
-  position: absolute; bottom: 0; left: 0; right: 0;
+  position: absolute; bottom: 1px; left: 0; right: 0;
   padding: 0.9rem 1.1rem;
   background: var(--bg);
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   color: var(--ink-soft);
@@ -140,6 +139,12 @@ body{
   display: flex; justify-content: space-between;
 }
 #caption-name{ color: var(--ink); font-weight: 500; }
+.map-bottom-line{
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--line);
+  z-index: 600;
+}
 
 .projects-col{ flex: 1; min-width: 0; display: flex; flex-direction: column; padding-top: 1rem; }
 .project-step{ min-height: 78vh; display: flex; align-items: flex-start; }
@@ -316,6 +321,7 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
         <span id="caption-name">select a project</span>
         <span id="caption-status">–</span>
       </div>
+      <div class="map-bottom-line"></div>
     </div>
     <div class="projects-col" id="projects-col"></div>
   </div>
