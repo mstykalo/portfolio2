@@ -122,9 +122,13 @@ body{
   height: calc(100vh - 4rem);
   flex: 1; min-width: 0;
   margin-right: 4rem;
+}
+.map-frame{
+  width: 100%; height: 100%;
   border: 1px solid var(--line);
   overflow: hidden;
   background: var(--panel);
+  position: relative;
 }
 #map{ width: 100%; height: 100%; filter: grayscale(1) contrast(1.05); }
 .map-caption{
@@ -316,12 +320,14 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
   <div class="map-col" id="map-col">
     <div class="rail-sticky"><div class="rail-fill" id="rail-fill"></div></div>
     <div class="map-sticky">
-      <div id="map"></div>
-      <div class="map-caption">
-        <span id="caption-name">select a project</span>
-        <span id="caption-status">–</span>
+      <div class="map-frame">
+        <div id="map"></div>
+        <div class="map-caption">
+          <span id="caption-name">select a project</span>
+          <span id="caption-status">–</span>
+        </div>
+        <div class="map-bottom-line"></div>
       </div>
-      <div class="map-bottom-line"></div>
     </div>
     <div class="projects-col" id="projects-col"></div>
   </div>
