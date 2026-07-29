@@ -270,9 +270,19 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
 
 /* ---------- Mobile ---------- */
 @media (max-width: 860px){
-  .scrolly{ grid-template-columns: 1fr; gap: 2rem; }
-  .map-sticky{ position: sticky; top: 0; height: 34vh; }
+  .scrolly{ grid-template-columns: 1fr; gap: 0; }
+  .map-col{ display: block; height: 0; overflow: visible; }
   .rail-sticky{ display: none; }
+  .map-sticky{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    width: 100%; height: 34vh;
+    z-index: 50;
+    border-left: none; border-right: none;
+  }
+  .map-sticky.map-released{ position: absolute; }
+  .projects-col{ padding-top: 34vh; }
+  .project{ top: 34vh; }
   .hero h1{ font-size: 28px; }
   .additional-grid{ grid-template-columns: 1fr; }
   .gallery-grid{ grid-template-columns: 1fr; }
@@ -299,7 +309,7 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
   <!-- YOUR NAME: edit the line below -->
   <h1>Mitchell Stykalo</h1>
   <h2>RPP, MCIP · Urban planner &amp; designer · Calgary, Alberta</h2>
-  <p>Over five years moving development projects from concept to approval – combining a technical design background with hands-on experience in land development approvals, project management, and urban design.</p>
+  <p>Over five years moving development projects from concept to approval – combining a technical design background with hands-on experience in development planning, project management, and urban design.</p>
   <div class="rule"></div>
 </div>
 
@@ -406,7 +416,7 @@ const FLAGSHIP = [
     lat: 51.005982546335346, lng: -114.12400423778084,
     description: "10-hectare masterplanned community integrating existing ATCO facilities.",
     role: "Led the planning application and supported masterplan development – graphics, narrative, negotiation with the city, and engagement including a project website, open houses, and community group connections.",
-    outcome: "Supporting an active negotiation process with the city; application progressing toward Calgary Planning Commission."
+    outcome: "Supported an active negotiation process with the city; application progressing toward Calgary Planning Commission."
   }
 ];
 
@@ -478,7 +488,11 @@ galleryGrid.appendChild(galleryNote);
 lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
 
 /* ---------------- Map + scroll-sync logic ---------------- */
-const map = L.map('map', { zoomControl: false, scrollWheelZoom: false, attributionControl: false })
+const map = L.map('map', {
+  zoomControl: false, attributionControl: false,
+  scrollWheelZoom: false, dragging: false, touchZoom: false,
+  doubleClickZoom: false, boxZoom: false, keyboard: false
+})
   .setView([FLAGSHIP[0].lat, FLAGSHIP[0].lng], 12);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
@@ -556,6 +570,12 @@ FLAGSHIP.forEach((p, i) => {
   col.appendChild(step);
 });
 
+// Marks the end of the projects list — used on mobile to know when
+// to release the fixed map so it scrolls away with the rest of the page.
+const mobileMapSentinel = document.createElement('div');
+mobileMapSentinel.id = 'mobile-map-sentinel';
+col.appendChild(mobileMapSentinel);
+
 const projectEls = document.querySelectorAll('.project');
 
 // Make the map column exactly as tall as the rendered project list
@@ -564,6 +584,10 @@ const projectEls = document.querySelectorAll('.project');
 // more reliable than depending on the grid to stretch it correctly.
 function syncMapColHeight(){
   const mapCol = document.getElementById('map-col');
+  if (window.innerWidth <= 860){
+    mapCol.style.minHeight = '';
+    return;
+  }
   mapCol.style.minHeight = (col.offsetHeight + 120) + 'px';
 }
 syncMapColHeight();
@@ -587,6 +611,37 @@ const io = new IntersectionObserver((entries) => {
 projectEls.forEach(el => io.observe(el));
 
 setActive(0);
+
+/* ---------------- Mobile map release ---------------- */
+// On mobile the map is position:fixed so it floats above the projects
+// as you scroll (there's no side-by-side column to keep it sticky
+// within, like on desktop). Once the user scrolls past the last
+// project, we freeze it in place at that exact scroll position and
+// switch it to position:absolute, so it scrolls away naturally with
+// the rest of the page instead of staying pinned forever.
+const mapStickyEl = document.querySelector('.map-sticky');
+const sentinel = document.getElementById('mobile-map-sentinel');
+function updateMobileMapRelease(){
+  if (window.innerWidth > 860){
+    mapStickyEl.classList.remove('map-released');
+    mapStickyEl.style.top = '';
+    return;
+  }
+  const mapHeight = mapStickyEl.offsetHeight;
+  const sentinelTop = sentinel.getBoundingClientRect().top + window.scrollY;
+  const releasePoint = sentinelTop - mapHeight;
+  if (window.scrollY >= releasePoint){
+    mapStickyEl.classList.add('map-released');
+    mapStickyEl.style.top = releasePoint + 'px';
+  } else {
+    mapStickyEl.classList.remove('map-released');
+    mapStickyEl.style.top = '';
+  }
+}
+window.addEventListener('scroll', updateMobileMapRelease);
+window.addEventListener('resize', () => setTimeout(updateMobileMapRelease, 150));
+window.addEventListener('load', () => setTimeout(updateMobileMapRelease, 300));
+updateMobileMapRelease();
 </script>
 
 </body>
