@@ -108,12 +108,12 @@ body{
   max-width: 1180px; margin: 0 auto;
   padding: 1.5rem 2rem 5rem;
 }
-.map-col{ position: relative; display: flex; flex-direction: row; align-items: stretch; gap: 4rem; }
-.map-visual{ display: flex; flex-direction: row; align-items: flex-start; gap: 0.9rem; flex: 1; min-width: 0; }
+.map-col{ position: relative; display: flex; flex-direction: row; align-items: stretch; }
 .rail-sticky{
   position: sticky; top: 2rem;
   height: calc(100vh - 4rem);
   width: 3px; flex-shrink: 0;
+  margin-right: 0.9rem;
   background: var(--line);
 }
 .rail-fill{ width: 100%; height: 0%; background: var(--ink); transition: height 0.4s ease; }
@@ -121,6 +121,7 @@ body{
   position: sticky; top: 2rem;
   height: calc(100vh - 4rem);
   flex: 1; min-width: 0;
+  margin-right: 4rem;
   border: 1px solid var(--line);
   overflow: hidden;
   background: var(--panel);
@@ -268,10 +269,9 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
 
 /* ---------- Mobile ---------- */
 @media (max-width: 860px){
-  .map-col{ flex-direction: column; gap: 0; }
-  .map-visual{ width: 100%; }
+  .map-col{ flex-direction: column; }
   .rail-sticky{ display: none; }
-  .map-sticky{ position: sticky; top: 0; height: 34vh; width: 100%; }
+  .map-sticky{ position: sticky; top: 0; height: 34vh; width: 100%; margin-right: 0; margin-bottom: 1rem; }
   .project{ top: 34vh; }
   .hero h1{ font-size: 28px; }
   .additional-grid{ grid-template-columns: 1fr; }
@@ -306,14 +306,12 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
 <p class="section-label">Selected projects</p>
 <div class="scrolly">
   <div class="map-col" id="map-col">
-    <div class="map-visual">
-      <div class="rail-sticky"><div class="rail-fill" id="rail-fill"></div></div>
-      <div class="map-sticky">
-        <div id="map"></div>
-        <div class="map-caption">
-          <span id="caption-name">select a project</span>
-          <span id="caption-status">–</span>
-        </div>
+    <div class="rail-sticky"><div class="rail-fill" id="rail-fill"></div></div>
+    <div class="map-sticky">
+      <div id="map"></div>
+      <div class="map-caption">
+        <span id="caption-name">select a project</span>
+        <span id="caption-status">–</span>
       </div>
     </div>
     <div class="projects-col" id="projects-col"></div>
@@ -564,10 +562,16 @@ FLAGSHIP.forEach((p, i) => {
 
 const projectEls = document.querySelectorAll('.project');
 
-// Make the map column exactly as tall as the rendered project list
-// (plus a small buffer), so the sticky map always has room to stay
-// pinned through the very last project before it's released. This is
-// more reliable than depending on the grid to stretch it correctly.
+// Explicitly size the map's container to match the real height of the
+// project list. On desktop the map sits beside the projects (side by
+// side columns), so its container needs to be exactly as tall as the
+// project list for the sticky map to have room to track through all
+// of it — relying on implicit flex-stretch for this turned out to be
+// unreliable for position:sticky's containing-block calculation, so
+// we set a real, explicit height here instead.
+// On mobile the map sits ABOVE the projects (stacked, not side by
+// side), so no extra height is needed there — the natural stacked
+// height already gives the sticky map the right amount of room.
 function syncMapColHeight(){
   const mapCol = document.getElementById('map-col');
   if (window.innerWidth <= 860){
