@@ -126,6 +126,7 @@ body{
 .map-frame{
   width: 100%; height: 100%;
   border: 1px solid var(--line);
+  box-shadow: inset 0 -1px 0 0 var(--line);
   overflow: hidden;
   background: var(--panel);
   position: relative;
@@ -145,9 +146,9 @@ body{
 #caption-name{ color: var(--ink); font-weight: 500; }
 .map-bottom-line{
   position: absolute; left: 0; right: 0; bottom: 0;
-  height: 1px;
+  height: 2px;
   background: var(--line);
-  z-index: 600;
+  z-index: 9999;
 }
 
 .projects-col{ flex: 1; min-width: 0; display: flex; flex-direction: column; padding-top: 1rem; }
@@ -604,6 +605,14 @@ window.addEventListener('load', () => setTimeout(syncMapColHeight, 300));
 // the screen. Whichever project crosses that band becomes active –
 // this keeps the selection change tied to "reaching the top", matching
 // how the map caption and highlight are meant to read.
+// The trigger band needs to match where a project actually locks into
+// place on screen. On desktop that's right near the very top (top:2rem),
+// so a narrow band near the top works. On mobile, projects lock in much
+// lower (top:34vh, just below the fixed map) — using the desktop band
+// there meant the trigger only fired once a project was already leaving
+// (scrolling back up through that band), not when it first arrived.
+const isMobileWidth = window.innerWidth <= 860;
+const triggerRootMargin = isMobileWidth ? '-30% 0px -55% 0px' : '-5% 0px -85% 0px';
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting){
@@ -612,7 +621,7 @@ const io = new IntersectionObserver((entries) => {
       setActive(Number(entry.target.dataset.index));
     }
   });
-}, { threshold: 0, rootMargin: '-5% 0px -85% 0px' });
+}, { threshold: 0, rootMargin: triggerRootMargin });
 projectEls.forEach(el => io.observe(el));
 
 setActive(0);
