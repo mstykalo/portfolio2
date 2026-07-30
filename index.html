@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mitchell Stykalo, RPP, MCIP – Urban Planner & Designer</title>
-<meta name="description" content="Portfolio of Mitchell Stykalo, RPP, MCIP – urban planner and designer in Calgary, Alberta. Development approvals, project management, and urban design across Calgary and BC.">
+<title>Mitchell Stykalo, RPP, MCIP, Urban Planner &amp; Project Manager</title>
+<meta name="description" content="Portfolio of Mitchell Stykalo, RPP, MCIP, urban planner and project manager in Calgary, Alberta. Development approvals, project management, and urban design across Alberta and BC.">
 
 <!-- Favicon: simple black-on-white "MS" monogram, no separate image file needed -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20fill='white'/%3E%3Ctext%20x='50'%20y='68'%20font-family='Arial,%20sans-serif'%20font-size='50'%20font-weight='700'%20text-anchor='middle'%20fill='black'%3EMS%3C/text%3E%3C/svg%3E">
 
 <!-- Social share preview (Open Graph + Twitter card) -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mitchell Stykalo, RPP, MCIP – Urban Planner & Designer">
+<meta property="og:title" content="Mitchell Stykalo, RPP, MCIP, Urban Planner & Project Manager">
 <meta property="og:description" content="Development approvals, project management, and urban design across Calgary and BC.">
 <meta property="og:image" content="https://mitchellstykalo.com/images/social-preview.jpg">
 <meta property="og:url" content="https://mitchellstykalo.com/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mitchell Stykalo, RPP, MCIP – Urban Planner & Designer">
+<meta name="twitter:title" content="Mitchell Stykalo, RPP, MCIP, Urban Planner & Project Manager">
 <meta name="twitter:description" content="Development approvals, project management, and urban design across Calgary and BC.">
 <meta name="twitter:image" content="https://mitchellstykalo.com/images/social-preview.jpg">
 
@@ -41,8 +41,9 @@
   --ink-soft: #6B6B6B;
   --line: #E4E4E4;
   --panel: #F7F7F7;
-  --pin-idle: #C7C7C7;
-  --pin-active: #111111;
+  --pin-idle: #B8863B;
+  --pin-active: #B8863B;
+  --accent: #B8863B;
 }
 
 *{ box-sizing: border-box; }
@@ -87,9 +88,10 @@ body{
 .hero p{
   font-size: 16px;
   color: #333;
-  margin: 0;
+  margin: 0 0 1.15rem;
 }
-.hero .rule{ height: 1px; background: var(--line); margin-top: 3.5rem; }
+.hero p:last-of-type{ margin-bottom: 0; }
+.hero .accent-mark{ width: 64px; height: 5px; background: var(--accent); margin-bottom: 1.5rem; }
 
 /* ---------- Section label ---------- */
 .section-label{
@@ -116,7 +118,7 @@ body{
   margin-right: 0.9rem;
   background: var(--line);
 }
-.rail-fill{ width: 100%; height: 0%; background: var(--ink); transition: height 0.4s ease; }
+.rail-fill{ width: 100%; height: 0%; background: var(--accent); transition: height 0.4s ease; }
 .map-sticky{
   position: sticky; top: 2rem;
   height: calc(100vh - 4rem);
@@ -131,7 +133,8 @@ body{
   background: var(--panel);
   position: relative;
 }
-#map{ width: 100%; height: 100%; filter: grayscale(1) contrast(1.05); }
+#map{ width: 100%; height: 100%; }
+#map .leaflet-tile-pane{ filter: grayscale(1) contrast(1.05); }
 .map-caption{
   position: absolute; bottom: 1px; left: 0; right: 0;
   padding: 0.9rem 1.1rem;
@@ -168,8 +171,8 @@ body{
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink);
-  border-bottom: 1px solid var(--ink);
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
   display: inline-block;
   padding-bottom: 3px;
   margin-bottom: 1.1rem;
@@ -188,9 +191,60 @@ body{
   margin: 0 0 0.85rem;
 }
 .project p{ font-size: 15px; color: #333; margin: 0 0 0.9rem; max-width: 460px; }
+.project p a{ color: var(--accent); }
 .project .outcome{ font-size: 14px; color: var(--ink-soft); font-style: italic; margin: 0; max-width: 460px; }
 
 /* ---------- Additional work (no map) ---------- */
+/* ---------- Capabilities ---------- */
+.capabilities{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+
+/* ---------- Overview map (all projects) ---------- */
+.overview{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+.overview-map-frame{
+  margin-top: 1.5rem;
+  height: 55vh;
+  min-height: 380px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--panel);
+}
+#overview-map{ width: 100%; height: 100%; }
+#overview-map .leaflet-tile-pane{ filter: grayscale(1) contrast(1.05); }
+.overview-pin{
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.overview-map-frame .leaflet-control-zoom{ border: 1px solid var(--line) !important; box-shadow: none !important; }
+.overview-map-frame .leaflet-control-zoom a{
+  background: var(--bg) !important; color: var(--accent) !important;
+  border-color: var(--line) !important;
+}
+@media (max-width: 860px){
+  .overview-map-frame{ height: 40vh; }
+}
+.capabilities-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.75rem;
+}
+.cap-heading{
+  font-weight: 600; font-size: 14px;
+  margin: 0 0 0.9rem;
+  color: var(--ink);
+}
+.cap-col ul{ list-style: none; margin: 0; padding: 0; }
+.cap-col li{
+  font-size: 14.5px;
+  color: #333;
+  padding: 0.4rem 0;
+}
+
 .additional{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 6rem; }
 .additional-grid{
   display: grid;
@@ -199,6 +253,7 @@ body{
   border-top: 1px solid var(--line);
   margin-top: 1.5rem;
 }
+.additional-item:last-child:nth-child(odd){ grid-column: 1 / -1; }
 .additional-item{
   padding: 1.35rem 0;
   border-bottom: 1px solid var(--line);
@@ -209,49 +264,45 @@ body{
   font-size: 12px; color: var(--ink-soft); margin: 0;
 }
 
-/* ---------- Project gallery ---------- */
-.gallery-section{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 6rem; }
-.gallery-grid{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-.gallery-tile{
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
+/* ---------- Inline project photo ---------- */
+.project-photo{
+  margin-top: 1.25rem;
   border: 1px solid var(--line);
+  overflow: hidden;
   cursor: zoom-in;
   background: var(--panel);
+  max-width: 460px;
 }
-.gallery-tile img{
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
+.project-photo img{
+  width: 100%; height: auto; display: block;
   filter: grayscale(1) contrast(1.02);
   transition: filter 0.5s ease, transform 0.6s ease;
 }
-.gallery-tile:hover img{ filter: grayscale(0); transform: scale(1.04); }
-.gallery-overlay{
-  position: absolute; inset: 0;
-  background: rgba(17,17,17,0.5);
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1.1rem;
-  transition: opacity 0.4s ease;
+.project-photo:hover img{ filter: grayscale(0); transform: scale(1.03); }
+.project-photo-strip{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  max-width: 620px;
 }
-.gallery-tile:hover .gallery-overlay{ opacity: 0; }
-.gallery-overlay .g-name{ color: #fff; font-weight: 600; font-size: 15px; margin: 0 0 3px; }
-.gallery-overlay .g-place{ color: rgba(255,255,255,0.82); font-size: 12px; margin: 0; }
-.gallery-note{
-  grid-column: 1 / 2;
-  font-size: 12px;
+.project-photo-strip .project-photo{
+  margin-top: 0;
+  max-width: none;
+  aspect-ratio: 4 / 3;
+}
+.project-photo-strip .project-photo img{ width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 860px){
+  .project-photo-strip{ grid-template-columns: repeat(2, 1fr); }
+}
+.project-photo-note{
+  font-size: 11px;
   color: var(--ink-soft);
-  opacity: 0.75;
+  opacity: 0.7;
   font-style: italic;
-  margin: 0.9rem 0 0;
+  margin: 0.5rem 0 0;
+  max-width: 460px;
 }
-@media (max-width: 860px){ .gallery-note{ grid-column: 1 / -1; } }
 
 .lightbox{
   position: fixed; inset: 0;
@@ -288,7 +339,7 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
   .project-step:last-child{ min-height: 140vh; }
   .hero h1{ font-size: 28px; }
   .additional-grid{ grid-template-columns: 1fr; }
-  .gallery-grid{ grid-template-columns: 1fr; }
+  .capabilities-grid{ grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
 /* leaflet marker override */
@@ -308,15 +359,51 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
 <body>
 
 <div class="hero">
-  <p class="eyebrow">Portfolio – 2026</p>
+  <div class="accent-mark"></div>
+  <p class="eyebrow">Portfolio 2026</p>
   <!-- YOUR NAME: edit the line below -->
   <h1>Mitchell Stykalo</h1>
-  <h2>RPP, MCIP · Urban planner &amp; designer · Calgary, Alberta</h2>
-  <p>Over five years moving development projects from concept to approval – combining a technical design background with hands-on experience in development planning, project management, and urban design.</p>
-  <div class="rule"></div>
+  <h2>RPP, MCIP · Urban planner &amp; project manager · Calgary, Alberta</h2>
+  <p>Over five years owning development projects from concept through approval. A design-focused planner managing land development efforts for a variety of public and private clients. Technical design skills contribute to streamlined project workflows, from concept to construction start.</p>
+  <p>A track record built on delivering projects on time and under budget, with an estimated $1B+ in development value achieved through council approvals. A strong team player, with experience contributing to interdisciplinary teams on complex projects across Western Canada.</p>
 </div>
 
-<p class="section-label">Selected projects</p>
+<div class="capabilities">
+  <p class="section-label" style="padding:0;">Capabilities</p>
+  <p class="project-photo-note" style="margin-top:0.4rem;">Selected highlights, not an exhaustive list.</p>
+  <div class="capabilities-grid">
+    <div class="cap-col">
+      <p class="cap-heading">Technical</p>
+      <ul>
+        <li>Adobe Creative Suite</li>
+        <li>Rhino</li>
+        <li>ESRI ArcGIS Pro &amp; Urban</li>
+        <li>AutoCAD &amp; Revit</li>
+        <li>SketchUp</li>
+      </ul>
+    </div>
+    <div class="cap-col">
+      <p class="cap-heading">Practice</p>
+      <ul>
+        <li>Urban design</li>
+        <li>Development approvals</li>
+        <li>Public engagement &amp; communication</li>
+        <li>Site feasibility analysis</li>
+        <li>Sub-consultant coordination</li>
+        <li>Project management</li>
+        <li>Budgeting</li>
+        <li>Business development</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="overview">
+  <p class="section-label" style="padding:0;">Selected projects</p>
+  <div class="overview-map-frame"><div id="overview-map"></div></div>
+</div>
+
+<p class="section-label">Project highlights</p>
 <div class="scrolly">
   <div class="map-col" id="map-col">
     <div class="rail-sticky"><div class="rail-fill" id="rail-fill"></div></div>
@@ -325,23 +412,19 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
         <div id="map"></div>
         <div class="map-caption">
           <span id="caption-name">select a project</span>
-          <span id="caption-status">–</span>
+          <span id="caption-status">·</span>
         </div>
         <div class="map-bottom-line"></div>
       </div>
     </div>
     <div class="projects-col" id="projects-col"></div>
   </div>
+  <p class="project-photo-note" style="max-width:1180px; padding: 0 2rem;">Renderings and site plans shown were produced during previous employment and are presented here as part of the public record of the associated planning applications.</p>
 </div>
 
 <div class="additional">
   <p class="section-label" style="padding:0;">Selected additional work</p>
   <div class="additional-grid" id="additional-grid"></div>
-</div>
-
-<div class="gallery-section">
-  <p class="section-label" style="padding:0;">Project gallery</p>
-  <div class="gallery-grid" id="gallery-grid"></div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -367,8 +450,9 @@ const FLAGSHIP = [
     status: "Approved · September 2025",
     lat: 51.05401231251305, lng: -114.05216835120515,
     description: "High-density mixed-use land use amendment permitting development up to 26 storeys.",
-    role: "Led the application through approvals – public engagement, 2D/3D development concept, and coordination with sub-consultants and the city.",
-    outcome: "Approved for mixed-use zoning up to 26 storeys, FAR up to 9.0."
+    role: "Led the application through approvals, including public engagement, 2D/3D development concept, and coordination with sub-consultants and the city.",
+    outcome: "Approved for mixed-use zoning up to 26 storeys, FAR up to 9.0.",
+    img: "images/4st-tower.jpg"
   },
   {
     name: "Calgary Italian Cultural Centre Redevelopment",
@@ -376,8 +460,9 @@ const FLAGSHIP = [
     status: "Approved · December 2025",
     lat: 51.05376715017746, lng: -114.05314995871869,
     description: "Multi-family land use amendment for two sites in Crescent Heights, permitting development up to 12 storeys.",
-    role: "Led the application through the approvals process – public engagement (open houses, project website), 2D/3D development concept, and coordination with sub-consultants and the city.",
-    outcome: "Approved for mixed-use zoning up to 12 storeys, FAR up to 6.0."
+    role: "Led the application through the approvals process, including public engagement (open houses, project website), 2D/3D development concept, and coordination with sub-consultants and the city.",
+    outcome: "Approved for mixed-use zoning up to 12 storeys, FAR up to 6.0.",
+    img: ["images/cicc.jpg", "images/cicc2.jpg"]
   },
   {
     name: "INTL Ave Towers",
@@ -385,8 +470,9 @@ const FLAGSHIP = [
     status: "Approved · July 2025",
     lat: 51.037507827002614, lng: -113.99203809964148,
     description: "High-density mixed-use land use amendment in Southview.",
-    role: "Led the application through approvals – public engagement, 2D/3D development concept, and coordination with sub-consultants and the city.",
-    outcome: "Approved for mixed-use zoning up to 26 storeys, FAR up to 8.0."
+    role: "Led the application through approvals, including public engagement, 2D/3D development concept, and coordination with sub-consultants and the city.",
+    outcome: "Approved for mixed-use zoning up to 26 storeys, FAR up to 8.0.",
+    img: "images/intl-ave.jpg"
   },
   {
     name: "17 Ave Redevelopment",
@@ -394,17 +480,19 @@ const FLAGSHIP = [
     status: "Approved · June 2026",
     lat: 51.03761383018223, lng: -114.06490511490681,
     description: "Multifamily mixed-use development in Mission.",
-    role: "Led the application through approvals – public engagement and coordination with sub-consultants and the city.",
-    outcome: "Approved for development up to 17 storeys, FAR up to 8.0."
+    role: "Led the application through approvals, including public engagement and coordination with sub-consultants and the city.",
+    outcome: "Approved for development up to 17 storeys, FAR up to 8.0.",
+    img: "images/17-ave.jpg"
   },
   {
     name: "Okotoks Land Use Redesignation",
     place: "Okotoks",
     status: "Approved · April 2025",
     lat: 50.70609855781161, lng: -113.97795300846138,
-    description: "Land use redesignation for a mix of townhomes and apartments, approximately 250 residential units total.",
+    description: "Land use redesignation for a mix of townhomes and apartments, 256 residential units total.",
     role: "Led the application and public engagement (including an open house), coordinated with sub-consultants, negotiated with town staff, and coordinated an accompanying policy amendment.",
-    outcome: "Approved for a mix of housing products and tenure types; the project is under construction as of 2026."
+    outcome: "Approved for a mix of housing products and tenure types; the project is under construction as of 2026.",
+    img: "images/okotoks.jpg"
   },
   {
     name: "First on Seventeenth",
@@ -412,8 +500,9 @@ const FLAGSHIP = [
     status: "Submitted December 2025 · Under review",
     lat: 51.038282837245205, lng: -114.06693691058042,
     description: "Two-tower masterplanned development up to 47 storeys.",
-    role: 'Led the application and engagement – including open houses, community group connections, and a dedicated <a href="https://firstonseventeenth.com/" target="_blank" rel="noopener">project website</a> – coordinated with sub-consultants and the city, and produced the renderings and technical drawings supporting the concept.',
-    outcome: "Advanced the application through city review, nearing Calgary Planning Commission; negotiations ongoing."
+    role: 'Led the application and engagement, including open houses, community group connections, and a dedicated <a href="https://firstonseventeenth.com/" target="_blank" rel="noopener">project website</a>, and coordinated with sub-consultants and the city, and produced the renderings and technical drawings supporting the concept.',
+    outcome: "Advanced the application through city review, nearing Calgary Planning Commission; negotiations ongoing.",
+    img: ["images/fos-1.jpg", "images/fos-2.jpg", "images/fos-4.jpg", "images/fos-5.jpg"]
   },
   {
     name: "ATCO Park Masterplan",
@@ -421,8 +510,9 @@ const FLAGSHIP = [
     status: "Submitted November 2025 · Under review",
     lat: 51.005982546335346, lng: -114.12400423778084,
     description: "10-hectare masterplanned community integrating existing ATCO facilities.",
-    role: "Led the planning application and supported masterplan development – graphics, narrative, negotiation with the city, and engagement including a project website, open houses, and community group connections.",
-    outcome: "Supported an active negotiation process with the city; application progressing toward Calgary Planning Commission."
+    role: "Led the planning application and supported masterplan development, including graphics, narrative, negotiation with the city, and engagement including a project website, open houses, and community group connections.",
+    outcome: "Supported an active negotiation process with the city; application progressing toward Calgary Planning Commission.",
+    img: "images/atco.jpg"
   }
 ];
 
@@ -431,16 +521,17 @@ const FLAGSHIP = [
    Just name + a short meta line.
    ============================================================ */
 const ADDITIONAL = [
-  { name: "Glenmore Trail Redevelopment", meta: "Calgary · Approved, May 2025" },
-  { name: "Springbank Hill Multifamily", meta: "Calgary · Approved, July 2025" },
-  { name: "Glacier Slopes Outline Plan", meta: "Calgary · Submitted 2024; ongoing" },
-  { name: "Steinhauer Masterplan", meta: "Edmonton · Masterplan and rezoning prepared, ongoing" },
-  { name: "Mission Redevelopment", meta: "Calgary · Submitted spring 2026; under review" },
-  { name: "The Bluffs Masterplan", meta: "Westbank First Nation, BC · Masterplan prepared, 2022–2023" },
-  { name: "Mt. Boucherie Place Redevelopment", meta: "West Kelowna, BC · Masterplan and CD zone prepared, 2022–2023" },
-  { name: "Five Crossings", meta: "Kelowna, BC · Public engagement led, 2022; constructed and occupied since" },
-  { name: "Vinterra Country Residential Development", meta: "Penticton, BC · Application prepared, 2021–2022" },
-  { name: "The Nest at Findlay", meta: "Kelowna, BC · Approved, 2022; constructed and occupied since" }
+  { name: "Glenmore Trail Redevelopment", meta: "Calgary · Approved, May 2025", lat: 50.99366301347311, lng: -114.08182597667096 },
+  { name: "Springbank Hill Multifamily", meta: "Calgary · Approved, July 2025", lat: 51.03195278406227, lng: -114.20577510061786 },
+  { name: "Glacier Slopes Outline Plan", meta: "Calgary · Submitted 2024; ongoing", lat: 51.19220320664501, lng: -114.16275900666759 },
+  { name: "Steinhauer Masterplan", meta: "Edmonton · Masterplan and rezoning prepared, ongoing", lat: 53.4625045815216, lng: -113.5030931839613 },
+  { name: "Mission Redevelopment", meta: "Calgary · Submitted spring 2026; under review", lat: 51.031045537889426, lng: -114.06437449483668 },
+  { name: "The Bluffs Masterplan", meta: "Westbank First Nation, BC · Masterplan prepared, 2022-2023", lat: 49.887046581880426, lng: -119.52931027224787 },
+  { name: "Mt. Boucherie Place Redevelopment", meta: "West Kelowna, BC · Masterplan and CD zone prepared, 2022-2023", lat: 49.860087169310944, lng: -119.58156391711236 },
+  { name: "Five Crossings", meta: "Kelowna, BC · Public engagement led, 2022; constructed and occupied since", lat: 49.88168890538894, lng: -119.47191593398902 },
+  { name: "Vinterra Country Residential Development", meta: "Penticton, BC · Application prepared, 2021-2022", lat: 49.527031798107075, lng: -119.5452784376298 },
+  { name: "The Nest at Findlay", meta: "Kelowna, BC · Approved, 2022; constructed and occupied since", lat: 49.90460773889646, lng: -119.39749345764835 },
+  { name: "Kingsview Blvd Redevelopment", meta: "Airdrie · Submitted January 2026; under review", lat: 51.26524218951475, lng: -113.99285885374788 }
 ];
 
 /* ---------------- Build additional-work grid ---------------- */
@@ -452,45 +543,45 @@ ADDITIONAL.forEach(item => {
   grid.appendChild(el);
 });
 
-/* ============================================================
-   PROJECT GALLERY — 4 images, grey/desaturated until hover,
-   click to view full extent. "images/bluffs.jpg" is the real
-   Bluffs Illustrative Plan; the other three are placeholders —
-   swap the "img" paths below once you have real photos/renders.
-   ============================================================ */
-const GALLERY = [
-  { name: "The Bluffs Masterplan", place: "Westbank First Nation, BC", img: "images/bluffs.jpg" },
-  { name: "First on Seventeenth", place: "Beltline, Calgary", img: "images/first-on-seventeenth.jpg" },
-  { name: "ATCO Park Masterplan", place: "Lincoln Park, Calgary", img: "images/atco.jpg" },
-  { name: "Calgary Italian Cultural Centre Redevelopment", place: "Crescent Heights, Calgary", img: "images/cicc.jpg" },
-];
+/* ---------------- Overview map (every project, Western Canada) ---------------- */
+const overviewMap = L.map('overview-map', {
+  zoomControl: true, attributionControl: false,
+  scrollWheelZoom: true, dragging: true, touchZoom: true,
+  doubleClickZoom: true, boxZoom: true, keyboard: true,
+  // Keeps the view locked to roughly Alberta/BC so the project pins never
+  // feel lost against a wider Canada/US-scale view when zoomed out.
+  maxBounds: L.latLngBounds([46.5, -128], [56.5, -108]),
+  maxBoundsViscosity: 1.0
+});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(overviewMap);
 
-const galleryGrid = document.getElementById('gallery-grid');
+const allProjectPoints = [
+  ...FLAGSHIP.map(p => ({ lat: p.lat, lng: p.lng })),
+  ...ADDITIONAL.map(p => ({ lat: p.lat, lng: p.lng }))
+];
+allProjectPoints.forEach(pt => {
+  L.marker([pt.lat, pt.lng], {
+    icon: L.divIcon({ className: '', html: '<div class="overview-pin"></div>', iconSize: [9, 9] })
+  }).addTo(overviewMap);
+});
+// Zoomed out enough that all three location clusters (Kelowna/Penticton BC,
+// Calgary/Airdrie/Okotoks AB, and Edmonton) sit comfortably together and
+// centered, rather than zoomed in tight on one cluster.
+const overviewBounds = L.latLngBounds(allProjectPoints.map(pt => [pt.lat, pt.lng]));
+function fitOverview(){
+  overviewMap.fitBounds(overviewBounds, { padding: [40, 40] });
+}
+fitOverview();
+setTimeout(() => overviewMap.invalidateSize(), 200);
+window.addEventListener('load', () => setTimeout(() => { overviewMap.invalidateSize(); fitOverview(); }, 300));
+
+/* ============================================================
+   LIGHTBOX — used for click-to-enlarge on each project's inline
+   photo (see the FLAGSHIP project card builder below).
+   ============================================================ */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
-
-GALLERY.forEach(item => {
-  const tile = document.createElement('div');
-  tile.className = 'gallery-tile';
-  tile.innerHTML = `
-    <img src="${item.img}" alt="${item.name}">
-    <div class="gallery-overlay">
-      <p class="g-name">${item.name}</p>
-      <p class="g-place">${item.place}</p>
-    </div>
-  `;
-  tile.addEventListener('click', () => {
-    lightboxImg.src = item.img;
-    lightboxCaption.textContent = `${item.name} – ${item.place}`;
-    lightbox.classList.add('open');
-  });
-  galleryGrid.appendChild(tile);
-});
-const galleryNote = document.createElement('p');
-galleryNote.className = 'gallery-note';
-galleryNote.textContent = 'Renderings and site plans shown were produced during previous employment and are presented here as part of the public record of the associated planning applications.';
-galleryGrid.appendChild(galleryNote);
 lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
 
 /* ---------------- Map + scroll-sync logic ---------------- */
@@ -563,6 +654,10 @@ FLAGSHIP.forEach((p, i) => {
   el.className = 'project';
   el.style.zIndex = i + 1;
   el.dataset.index = i;
+  const images = Array.isArray(p.img) ? p.img : [p.img];
+  const photoMarkup = images.length > 1
+    ? `<div class="project-photo-strip">${images.map(src => `<div class="project-photo strip-item"><img src="${src}" alt="${p.name}"></div>`).join('')}</div>`
+    : `<div class="project-photo"><img src="${images[0]}" alt="${p.name}"></div>`;
   el.innerHTML = `
     <span class="status">${p.status}</span>
     <p class="place">${p.place}</p>
@@ -570,8 +665,17 @@ FLAGSHIP.forEach((p, i) => {
     <p>${p.description}</p>
     <p>${p.role}</p>
     <p class="outcome">${p.outcome}</p>
+    ${photoMarkup}
   `;
   el.addEventListener('click', () => selectProject(i));
+  el.querySelectorAll('.project-photo').forEach((photoEl, idx) => {
+    photoEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lightboxImg.src = images[idx];
+      lightboxCaption.textContent = `${p.name} · ${p.place}`;
+      lightbox.classList.add('open');
+    });
+  });
   step.appendChild(el);
   col.appendChild(step);
 });
