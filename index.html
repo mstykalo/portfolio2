@@ -197,34 +197,6 @@ body{
 /* ---------- Additional work (no map) ---------- */
 /* ---------- Capabilities ---------- */
 .capabilities{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 4rem; }
-
-/* ---------- Overview map (all projects) ---------- */
-.overview{ max-width: 1180px; margin: 0 auto; padding: 1rem 2rem 4rem; }
-.overview-map-frame{
-  margin-top: 1.5rem;
-  height: 55vh;
-  min-height: 380px;
-  border: 1px solid var(--line);
-  overflow: hidden;
-  background: var(--panel);
-}
-#overview-map{ width: 100%; height: 100%; }
-#overview-map .leaflet-tile-pane{ filter: grayscale(1) contrast(1.05); }
-.overview-pin{
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 2px var(--accent);
-}
-.overview-map-frame .leaflet-control-zoom{ border: 1px solid var(--line) !important; box-shadow: none !important; }
-.overview-map-frame .leaflet-control-zoom a{
-  background: var(--bg) !important; color: var(--accent) !important;
-  border-color: var(--line) !important;
-}
-@media (max-width: 860px){
-  .overview-map-frame{ height: 40vh; }
-}
 .capabilities-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -275,10 +247,7 @@ body{
 }
 .project-photo img{
   width: 100%; height: auto; display: block;
-  filter: grayscale(1) contrast(1.02);
-  transition: filter 0.5s ease, transform 0.6s ease;
 }
-.project-photo:hover img{ filter: grayscale(0); transform: scale(1.03); }
 .project-photo-strip{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -335,6 +304,13 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
   .rail-sticky{ display: none; }
   .map-sticky{ position: sticky; top: 8px; height: 34vh; width: 100%; margin-right: 0; margin-bottom: 1rem; }
   .project{ top: 34vh; }
+  .project .status{
+    display: block;
+    width: 100%;
+    border-bottom-width: 2px;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
   .project-step{ min-height: 130vh; }
   .project-step:last-child{ min-height: 140vh; }
   .hero h1{ font-size: 28px; }
@@ -366,7 +342,7 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
   <!-- YOUR NAME: edit the line below -->
   <h1>Mitchell Stykalo</h1>
   <h2>RPP, MCIP · Urban planner &amp; project manager · Calgary, Alberta</h2>
-  <p>Over five years owning development projects from concept through approval. A design-focused planner managing land development efforts for a variety of public and private clients. Technical design skills contribute to streamlined project workflows, from concept to construction start.</p>
+  <p>6+ years owning development projects from concept through approval. A design-focused planner managing land development efforts for a variety of public and private clients. Technical design skills contribute to streamlined project workflows, from concept to construction start.</p>
   <p>A track record built on delivering projects on time and under budget, with an estimated $1B+ in development value achieved through council approvals. A strong team player, with experience contributing to interdisciplinary teams on complex projects across Western Canada.</p>
 </div>
 
@@ -403,11 +379,6 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
       </ul>
     </div>
   </div>
-</div>
-
-<div class="overview">
-  <p class="section-label" style="padding:0;">Selected projects</p>
-  <div class="overview-map-frame"><div id="overview-map"></div></div>
 </div>
 
 <p class="section-label">Project highlights</p>
@@ -451,6 +422,16 @@ footer a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var
    freely. lat/lng already set from the coordinates provided.
    ============================================================ */
 const FLAGSHIP = [
+  {
+    name: "First on Seventeenth",
+    place: "Beltline, Calgary",
+    status: "Submitted December 2025 · Under review",
+    lat: 51.038282837245205, lng: -114.06693691058042,
+    description: "Two-tower masterplanned development up to 47 storeys.",
+    role: 'Led the application and engagement, including open houses, community group connections, and a dedicated <a href="https://firstonseventeenth.com/" target="_blank" rel="noopener">project website</a>, and coordinated with sub-consultants and the city, and produced the renderings and technical drawings supporting the concept.',
+    outcome: "Advanced the application through city review, nearing Calgary Planning Commission; negotiations ongoing.",
+    img: ["images/fos-1.jpg", "images/fos-2.jpg", "images/fos-4.jpg", "images/fos-5.jpg"]
+  },
   {
     name: "4 St NE Tower",
     place: "Crescent Heights, Calgary",
@@ -502,16 +483,6 @@ const FLAGSHIP = [
     img: "images/okotoks.jpg"
   },
   {
-    name: "First on Seventeenth",
-    place: "Beltline, Calgary",
-    status: "Submitted December 2025 · Under review",
-    lat: 51.038282837245205, lng: -114.06693691058042,
-    description: "Two-tower masterplanned development up to 47 storeys.",
-    role: 'Led the application and engagement, including open houses, community group connections, and a dedicated <a href="https://firstonseventeenth.com/" target="_blank" rel="noopener">project website</a>, and coordinated with sub-consultants and the city, and produced the renderings and technical drawings supporting the concept.',
-    outcome: "Advanced the application through city review, nearing Calgary Planning Commission; negotiations ongoing.",
-    img: ["images/fos-1.jpg", "images/fos-2.jpg", "images/fos-4.jpg", "images/fos-5.jpg"]
-  },
-  {
     name: "ATCO Park Masterplan",
     place: "Lincoln Park, Calgary",
     status: "Submitted November 2025 · Under review",
@@ -549,38 +520,6 @@ ADDITIONAL.forEach(item => {
   el.innerHTML = `<p class="name">${item.name}</p><p class="meta">${item.meta}</p>`;
   grid.appendChild(el);
 });
-
-/* ---------------- Overview map (every project, Western Canada) ---------------- */
-const overviewMap = L.map('overview-map', {
-  zoomControl: true, attributionControl: false,
-  scrollWheelZoom: true, dragging: true, touchZoom: true,
-  doubleClickZoom: true, boxZoom: true, keyboard: true,
-  // Keeps the view locked to roughly Alberta/BC so the project pins never
-  // feel lost against a wider Canada/US-scale view when zoomed out.
-  maxBounds: L.latLngBounds([46.5, -128], [56.5, -108]),
-  maxBoundsViscosity: 1.0
-});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(overviewMap);
-
-const allProjectPoints = [
-  ...FLAGSHIP.map(p => ({ lat: p.lat, lng: p.lng })),
-  ...ADDITIONAL.map(p => ({ lat: p.lat, lng: p.lng }))
-];
-allProjectPoints.forEach(pt => {
-  L.marker([pt.lat, pt.lng], {
-    icon: L.divIcon({ className: '', html: '<div class="overview-pin"></div>', iconSize: [9, 9] })
-  }).addTo(overviewMap);
-});
-// Zoomed out enough that all three location clusters (Kelowna/Penticton BC,
-// Calgary/Airdrie/Okotoks AB, and Edmonton) sit comfortably together and
-// centered, rather than zoomed in tight on one cluster.
-const overviewBounds = L.latLngBounds(allProjectPoints.map(pt => [pt.lat, pt.lng]));
-function fitOverview(){
-  overviewMap.fitBounds(overviewBounds, { padding: [40, 40] });
-}
-fitOverview();
-setTimeout(() => overviewMap.invalidateSize(), 200);
-window.addEventListener('load', () => setTimeout(() => { overviewMap.invalidateSize(); fitOverview(); }, 300));
 
 /* ============================================================
    LIGHTBOX — used for click-to-enlarge on each project's inline
